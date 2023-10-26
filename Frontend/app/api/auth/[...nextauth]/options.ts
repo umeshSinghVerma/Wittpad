@@ -25,30 +25,34 @@ export const options: NextAuthOptions = {
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: {
-                    label: "Username",
-                    type: "text",
-                    placeholder: "your name"
-                },
-                password: {
-                    label: "Password",
-                    type: "password",
-                    placeholder: "**********"
-                },
-                async authorize(credentials: any) {
-                    const user = { id: 42, name: "dave", password: "nextauth" }
-                    const { username, password } = credentials as {
-                        username: string,
-                        password: string
-                    }
-                    if (username === user.name && password === user.password) {
-                        return user;
-                    }
-                    else {
-                        return { id: "0", name: "empty", password: "notused" };
-                    }
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials.password) {
+                  return null;
                 }
-            }
+            
+                // Replace this with your actual authentication logic.
+                // For example, you might want to query a database to check if the credentials are valid.
+                // Assuming you have a database of users:
+                const users = [
+                  { username: "dave", email: "dave@example.com", password: "nextauth" },
+                  // Add more user objects here
+                ];
+            
+                // Find the user that matches the provided email and password
+                const user = users.find(
+                  (user) =>
+                    user.email === credentials.email && user.password === credentials.password
+                );
+            
+                if (user) {
+                  return { ...user, id: user.email }; // Return the user object with an ID
+                } else {
+                  return null; // Return null if authentication failed
+                }
+              }
         })
     ],
 }
