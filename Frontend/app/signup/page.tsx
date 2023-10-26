@@ -28,7 +28,7 @@ export default function Page() {
                 <button className='m-2 bg-green-400 rounded p-2 border-0'>Create Account</button>
                 <div className='flex'>
                     <button className='flex-grow text-white m-2 bg-[#3a579d] rounded p-2 border-0' onClick={() => {
-                        signIn("github");
+                        signIn("facebook");
                     }}>Signup with FaceBook</button>
                     <button className='flex-grow text-white m-2 bg-[#4285f4] rounded p-2 border-0' onClick={() => {
                         signIn("google");

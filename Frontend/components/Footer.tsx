@@ -151,6 +151,7 @@ export default function Footer() {
                             )
                         })}
                     </div>
+                    <div></div>
                 </div>
                 <div className='flex flex-wrap gap-9 justify-between my-5'>
                     <div>Logo</div>
