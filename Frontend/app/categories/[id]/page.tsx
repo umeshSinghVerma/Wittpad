@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function page({ params }: { params: { id: string } }) {
     const data = {
@@ -17,7 +18,139 @@ export default function page({ params }: { params: { id: string } }) {
             'Political Figures books',
             'Simplify Podcast books',
             "Women's Stories books",
-            'US Presidents books']
+            'US Presidents books'],
+        popularBooks:[
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+        ],
+        newest:[
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+            {
+                imgUrl:"https://images.blinkist.io/images/books/5f8962c26cee070007a86bae/1_1/470.jpg",
+                title:"Perfectly Confident",
+                author:"Don A. Moore",
+                slogan:"How to Calibrate Your Decisions Wisely",
+                audioTime:"19 min",
+                rating:"4.1"
+            },
+        ]
     }
     return (
         <div className='w-full'>
@@ -37,7 +170,7 @@ export default function page({ params }: { params: { id: string } }) {
                     <div className='text-xl font-bold text-blue-950 my-5'>
                         Topics
                     </div>
-                    <div className='flex md:flex-wrap overflow-x-auto overflow-y-hidden gap-6 whitespace-nowrap'>
+                    <div className='flex md:flex-wrap overflow-x-auto overflow-y-hidden p-1 cursor-pointer gap-6 whitespace-nowrap'>
                         {
                             data.topics && data.topics.map((topic, key) => {
                                 return (
@@ -49,19 +182,52 @@ export default function page({ params }: { params: { id: string } }) {
                         }
                     </div>
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col mt-10'>
                     <div className='text-xl font-bold text-blue-950 my-4'>
                         Popular
                     </div>
                     <div className='text-[#3a4649] text-md mb-4'>
-                        <p>{`What’s popular with the Blinkist community in Biography & Memoir`}</p>
+                        <p>{`What’s popular with the Blinkist community in ${data.category}`}</p>
                     </div>
                     <div className='flex md:flex-wrap overflow-x-auto overflow-y-hidden gap-6 whitespace-nowrap'>
                         {
-                            data.topics && data.topics.map((topic, key) => {
+                            data.popularBooks && data.popularBooks.map((book, key) => {
                                 return (
-                                    <div className='my-2'>
-                                        <span key={key} className='bg-[#f1f6f4] p-3 border-2 border-transparent hover:border-green-400 hover:rounded-md'>{topic}</span>
+                                    <div className='my-2 flex flex-col w-[200px]'>
+                                        <Image src={book.imgUrl} alt={book.title} width={150} height={100}/>
+                                        <div className='font-bold text-sm text-blue-950 my-2'>{book.title}</div>
+                                        <div className='text-[#515b5e] font-bold text-sm mb-2'>{book.author}</div>
+                                        <div className='text-[#515b5e] text-sm mb-2 w-full whitespace-break-spaces'><p>{book.slogan}</p></div>
+                                        <div className='flex gap-5 text-sm text-[#515b5e]'>
+                                            <div>{book.audioTime}</div>
+                                            <div>{book.rating}</div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+                <div className='flex flex-col mt-10'>
+                    <div className='text-xl font-bold text-blue-950 my-4'>
+                        Newest
+                    </div>
+                    <div className='text-[#3a4649] text-md mb-4'>
+                        <p>Nothing but the freshest additions to the catalogue</p>
+                    </div>
+                    <div className='flex md:flex-wrap overflow-x-auto overflow-y-hidden gap-6 whitespace-nowrap'>
+                        {
+                            data.newest && data.newest.map((book, key) => {
+                                return (
+                                    <div className='my-2 flex flex-col w-[200px]'>
+                                        <Image src={book.imgUrl} alt={book.title} width={150} height={100}/>
+                                        <div className='font-bold text-sm text-blue-950 my-2'>{book.title}</div>
+                                        <div className='text-[#515b5e] font-bold text-sm mb-2'>{book.author}</div>
+                                        <div className='text-[#515b5e] text-sm mb-2 w-full whitespace-break-spaces'><p>{book.slogan}</p></div>
+                                        <div className='flex gap-5 text-sm text-[#515b5e]'>
+                                            <div>{book.audioTime}</div>
+                                            <div>{book.rating}</div>
+                                        </div>
                                     </div>
                                 )
                             })
