@@ -63,7 +63,7 @@ export default function Header() {
                     <div>Search</div>
                     <button className='md:block hidden' onClick={() => { setExplore(!explore) }}>Explore</button>
                 </div>
-                <div className='flex text-sm'>
+                <div className='flex text-sm'> 
                     {/* <button className='p-2 bg-green-400 rounded border-0'>Start Free Trial</button> */}
                     <Link href={"/login"} className='p-2 border-0 bg-green-400 rounded'>Log in</Link>
                 </div>
