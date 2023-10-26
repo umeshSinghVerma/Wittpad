@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 export default function page({ params }: { params: { id: string } }) {
     const data = {
-        category: params.id,
+        category: decodeURIComponent(params.id),
         slogan: "Mandela to Marie Curie, Steve Jobs to Toussaint L’Ouverture—learn the life lessons of giants.",
         topics: ['Biographies books',
             'Memoirs books',
@@ -157,7 +157,7 @@ export default function page({ params }: { params: { id: string } }) {
             <Header />
             <div className='md:p-[18px] p-8 md:py-16 lg:w-[60%] m-auto'>
                 <div className='flex text-sm'>
-                    <Link className='text-[#4e83fe]' href={"/categories"}>{"Categories >"}</Link>
+                    <Link className='text-[#4e83fe] mr-2' href={"/categories"}>{"Categories >"}</Link>
                     <div>{data.category}</div>
                 </div>
                 <div className='text-3xl font-bold text-blue-950 my-5'>
