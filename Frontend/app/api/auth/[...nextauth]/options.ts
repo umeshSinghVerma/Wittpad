@@ -38,7 +38,7 @@ export const options: NextAuthOptions = {
                 // Assuming you have a database of users:
                 const users = [
                   { username: "dave", email: "dave@example.com", password: "nextauth" },
-                  // Add more user objects here
+                  // Add more user objects here 
                 ];
             
                 // Find the user that matches the provided email and password
