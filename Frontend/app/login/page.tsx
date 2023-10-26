@@ -36,7 +36,7 @@ export default function Page() {
         <button className='flex-grow m-2 mb-8 bg-white border-black border-2 rounded p-2' onClick={() => {
           signIn("twitter");
         }}>Log in with Twitter</button>
-        <Link href={"#"} className='m-auto  text-gray-800'>You do not have an account? </Link>
+        <Link href={"/signup"} className='m-auto  text-gray-800'>You do not have an account? </Link>
         <Link href={"#"} className='m-auto  text-gray-800'>Forgot your password? </Link>
       </div>
       <Footer/>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <div className='bg-[#f1f6f4] w-screen'>
+        <div className='bg-[#f1f6f4]'>
             <div className='mt-16 p-[3rem] flex flex-col lg:w-[60%] m-auto'>
                 <div>
                     <h1 className='m-auto text-xl font-bold text-blue-950 my-5'>Discover the Wittpad catalogue</h1>
