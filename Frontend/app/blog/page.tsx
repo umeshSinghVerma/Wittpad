@@ -40,8 +40,8 @@ export default function page() {
     return (
         <div>
             <Header />
-            <div className='lg:w-[60%] m-auto p-[18px]'>
-                <div className='flex flex-wrap justify-between text-blue-950 text-sm border-b-2 border-blue-950 pb-2 font-bold'>
+            <div className='lg:w-[70%] m-auto p-[18px]'>
+                <div className='flex flex-col md:flex-row justify-between text-blue-950 text-sm border-b-2 border-blue-950 pb-2 font-bold'>
                     <button>Articles</button>
                     <button>Case Studies</button>
                     <button>Ebooks</button>
