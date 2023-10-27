@@ -1,10 +1,33 @@
 'use client'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import RatingCards from '@/components/RatingCards'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
+  const ratings = [
+    {
+      rating: 5,
+      text: `It's highly addictive to get core insights on personally relevant topics without repetition or triviality. Added to that the apps ability to suggest kindred interests opens up a foundation of knowledge.`,
+      user: 'Sven O.'
+    },
+    {
+      rating: 5,
+      text: `Great app. Good selection of book summaries you can read or listen to while commuting. Instead of scrolling through your social media news feed, this is a much better way to spend your spare time in my opinion.`,
+      user: 'Thi Viet Quynh N.'
+    },
+    {
+      rating: 5,
+      text: `Great app. Good selection of book summaries you can read or listen to while commuting. Instead of scrolling through your social media news feed, this is a much better way to spend your spare time in my opinion.`,
+      user: 'Thi Viet Quynh N.'
+    },
+    {
+      rating: 5,
+      text: `Great app. Good selection of book summaries you can read or listen to while commuting. Instead of scrolling through your social media news feed, this is a much better way to spend your spare time in my opinion.`,
+      user: 'Thi Viet Quynh N.'
+    },
+  ]
   return (
     <div>
       <Header />
@@ -92,7 +115,31 @@ export default function Home() {
         <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
           What our members say
         </div>
+        <div className='flex justify-center flex-col gap-8 items-center'>
+          {
+            ratings.map((rate, key) => {
+              return (
+                <RatingCards rating={rate.rating} text={rate.text} user={rate.user} key={key} />
+              )
+            })
+          }
+        </div>
       </div>
+      <div className='my-4 flex justify-center'>
+        <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+      </div>
+      <div className='text-center md:text-3xl font-bold text-blue-950 mb-5 mt-10'>
+        Start growing with Blinkist now
+      </div>
+      <div>
+        <div className='flex flex-col bg-[#d7e9ff] p-[28px] w-min items-center justify-center rounded-2xl'>
+          <img src="/crown.svg" alt="" height={60} width={60} />
+          <p className='text-4xl text-blue-950 font-extrabold whitespace-nowrap'>28 Million</p>
+          <p className='text-sm text-gray-700 whitespace-nowrap'>Downloads on all platforms</p>
+        </div>
+
+      </div>
+
       <Footer />
     </div>
   )
