@@ -409,22 +409,22 @@ export default function Home() {
 
 
 
-    {
-      dataupdae.map(data => {
-        const doc = {
-          _type: 'category',
-          name: data.name,
-          topics: data.topics
-        }
-        client.create(doc).then((res) => {
-          console.log(`Bike was created, document ID is ${res._id}`)
-        })
-      })
-    }
+    // {
+    //   dataupdae.map(data => {
+    //     const doc = {
+    //       _type: 'category',
+    //       name: data.name,
+    //       topics: data.topics
+    //     }
+    //     client.create(doc).then((res) => {
+    //       console.log(`Bike was created, document ID is ${res._id}`)
+    //     })
+    //   })
+    // }
   }
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <div className='lg:w-[65%] m-auto p-[18px]'>
         <div>
           <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
@@ -535,7 +535,7 @@ export default function Home() {
 
       </div>
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }

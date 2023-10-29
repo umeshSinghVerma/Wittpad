@@ -1,42 +1,34 @@
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
 import client from '@/sanity/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-
+import { PortableText } from '@portabletext/react'
 async function getdata() {
-    const data = await client.fetch('*[_type == "book" && title == "THE HOBBIT" ]');
-    console.log("this is data obtained ", data);
+    const beta = await client.fetch('*[_type == "book" && title == "THE HOBBIT" ]',{ cache: 'no-store' });
+    const data = JSON.parse(JSON.stringify(beta));
+    console.log("this is data obtained ", data[0]);
     const book = await data[0];
     let authors = "";
     book.book_author.map(async (author: any) => {
         const rawdata: any = await client.getDocument(author._ref);
-        console.log("author ", rawdata)
-        // if (rawdata?.length > 0) {
         authors = authors + " " + rawdata.authorName;
-        // }
     })
-    let bookCategory: string | undefined = "";
-    const rawCategory: any = await client.getDocument(book.book_category._ref);
-    console.log("category ", rawCategory)
-    // if (rawCategory?.length > 0) {
-    bookCategory = rawCategory.name;
-    // }
+    let bookCategory: Array<string> | undefined = [];
+    book.categories.map(async (category: any) => {
+        const rawCategory: any = await client.getDocument(category._ref);
+        bookCategory?.push(rawCategory.name);
+    })
 
     let bookImageUrl: string | undefined = "";
     const imageData: any = book.book_image.asset._ref;
     const rawImage: any = await client.getDocument(imageData);
-    console.log("image ", rawImage)
-    // if (rawImage?.length > 0) {
     bookImageUrl = rawImage.url;
-    // }
 
 
     const alpha = {
         description: book.about,
         time: book.book_timeToRead,
-        topics: [book.book_topic],
+        topics: book.book_topic,
         title: book.title,
         author: authors,
         category: bookCategory,
@@ -45,7 +37,7 @@ async function getdata() {
         rating: '4.7',
         RatingReview: "3,783,925 Ratings",
         Genres: "Fantasy, Classics, Fiction, Adventure, Young Adult, High Fantasy, Science Fiction Fantasy",
-        Summary: ["This is the Summary"],
+        summary: book.wholeSummary,
         BookEdition: "366 pages, Paperback",
         MoreEditionLink: "#",
         PublishingDate: "First published September 21, 1937",
@@ -81,6 +73,7 @@ export default async function page() {
         Stephen Hanselman is a publisher and literary agent. He studied at Fresno Pacific University and obtained a Master's degree from Harvard Divinity School. The Daily Stoic is his first book as an author.`
     }
     const data = await getdata();
+    console.log(data.summary);
     // const [data, setData] = useState(initalData)
     // window.data = data;
 
@@ -91,7 +84,7 @@ export default async function page() {
             <div className='lg:w-[60%] m-auto p-[18px]'>
                 <div className='gap-1 text-sm hidden md:flex'>
                     <Link className='text-blue-600' href={'/categories'}>{`Categories >`}</Link>
-                    <Link className='text-blue-600' href={`/categories/${data.category}`}>{`${data.category} >`}</Link>
+                    <Link className='text-blue-600' href={`/categories/${data.category[0]}`}>{`${data.category[0]} >`}</Link>
                     <p>{data.title}</p>
                 </div>
                 <div className='flex flex-col-reverse md:flex-row justify-between'>
@@ -125,13 +118,13 @@ export default async function page() {
                                 <div className='font-bold text-sm text-blue-950 my-5'>
                                     Topics
                                 </div>
-                                <div className='flex md:flex-wrap overflow-x-auto overflow-y-hidden p-1 cursor-pointer gap-6 whitespace-nowrap mb-5'>
+                                <div className='flex flex-wrap  p-1 cursor-pointer gap-6 whitespace-nowrap mb-8'>
                                     {
-                                        data.topics && data.topics.map((topic, key) => {
+                                        data.topics.length > 0 && data.topics.map((topic: string, key: number) => {
                                             return (
-                                                <div className='my-2'>
-                                                    <span key={key} className='bg-[#f1f6f4] p-3 border-2 border-transparent hover:border-green-400 hover:rounded-md'>{topic}</span>
-                                                </div>
+                                                <Link href={`/categories/${topic}`} className='text-center min-w-min md:w-[30%] flex-grow bg-[#f1f6f4] p-3 border-2 border-transparent hover:border-green-400 hover:rounded-md'>
+                                                    <p key={key} className=''>{topic}</p>
+                                                </Link>
                                             )
                                         })
                                     }
@@ -140,7 +133,7 @@ export default async function page() {
                             <div className='flex flex-col gap-5'>
                                 <button className='font-bold text-sm text-start text-blue-950'>Table of Contents</button>
                                 {showTableContent && <div className='underline text-sm flex flex-col gap-2'>
-                                    <Link href={"#summary"}>{`${data.title} Summary of ${data.Summary.length} key ideas`}</Link>
+                                    <Link href={"#summary"}>{`${data.title} Summary of ${data.summary.length} key ideas`}</Link>
                                     <Link href={"#aboutbook"}>{`What is ${data.title} about`}</Link>
                                     <Link href={"#bestquotes"}>{`Best quotes from ${data.title}`}</Link>
                                     <Link href={"#whoshouldread"}>{`Who should read ${data.title} ?`}</Link>
@@ -158,8 +151,17 @@ export default async function page() {
                 <div className='my-4'>
                     <Link href={"/login"} className='py-3 px-10 font-semibold text-blue-950 block text-center md:hidden border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
                 </div>
-                <div id='summary'>
-                    Summary
+                <div id='summary' className='flex flex-col gap-3'>
+                    {
+                        data.summary.map((obj: any, key: number) => {
+                            return (
+                                <div key={key}>
+                                    <div className='md:text-xl font-bold text-blue-950'>{obj.keyidea}</div>
+                                    <PortableText value={obj.summary} />
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div>
                     <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
@@ -214,6 +216,21 @@ export default async function page() {
                     <div id='bestquotes' className='my-10'>
                         <span className='md:text-xl font-bold text-blue-950'>About the Author</span>
                         <p className='text-blue-950 my-4'>{data.aboutAuthor}</p>
+                    </div>
+                    <div id='bestquotes' className='my-10'>
+                        <span className='md:text-xl font-bold text-blue-950'>Categories with</span>
+                        <span className='md:text-xl italic text-blue-950 ml-2'>{data.title}</span>
+                        <div className='flex flex-wrap  p-1 cursor-pointer gap-6 whitespace-nowrap my-8'>
+                            {
+                                data.category.length > 0 && data.category.map((topic: string, key: number) => {
+                                    return (
+                                        <Link href={`/categories/${topic}`} className='text-center min-w-min md:w-[30%] flex-grow bg-[#f1f6f4] p-3 border-2 border-transparent hover:border-green-400 hover:rounded-md'>
+                                            <p key={key} className=''>{topic}</p>
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

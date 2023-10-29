@@ -44,56 +44,39 @@ const book = {
       type: 'string'
     },
     {
-      name: 'book_category',
-      title: 'Category',
-      type: 'reference',
-      to: [{ type: 'category' }]
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [
+        {
+          name: 'book_category',
+          title: 'Category',
+          type: 'reference',
+          to: [{ type: 'category' }]
+        }
+      ]
     },
     {
       name: 'book_topic',
       title: 'Topic',
+      type: 'array',
+      of: [{ type: 'string' }]
+    },
+    {
+      name: 'book_bestQuote',
+      title: 'Best Quote',
       type: 'string',
-      options: {
-        list: 
-          // Get the currently selected category document
-          // const category = document.category;
-          // console.log('this is thing ',document,category);
-
-          // Return the topics of the selected category as options
-          // return category.topics.map(topic => ({
-          //   title: topic,
-          //   value: topic
-          // }));
-          [
-            { "title": "Alabama", "value": "AL" },
-            { "title": "Alaska", "value": "AK" },
-            { "title": "Arizona", "value": "AZ" },
-            // ...
-          ]
-        
-      }
     },
     {
-      name:'book_keyIdea',
-      title:'Key Ideas',
-      type:'array',
-      of:[{type:"string"}]
+      name: 'book_whoShouldRead',
+      title: 'Who Should Read It?',
+      type: 'array',
+      of: [{ type: "string" }]
     },
     {
-      name:'book_bestQuote',
-      title:'Best Quote',
-      type:'string',
-    },
-    {
-      name:'book_whoShouldRead',
-      title:'Who Should Read It?',
-      type:'array',
-      of:[{type:"string"}]
-    },
-    {
-      name:'book_buyLink',
-      title:'Buy Link',
-      type:'url',
+      name: 'book_buyLink',
+      title: 'Buy Link',
+      type: 'url',
     },
     {
       name: 'book_ratingsReceived',
@@ -101,12 +84,37 @@ const book = {
       type: 'array',
       of: [
         {
-          name:'book_ratingByUser',
-          type:'object',
-          title:'Rating',
-          fields:[
-            {name:'user_email',type:'email',title:'Email'},
-            {name:'starRating',type:'number',title:'Rating'}
+          name: 'book_ratingByUser',
+          type: 'object',
+          title: 'Rating',
+          fields: [
+            { name: 'user_email', type: 'email', title: 'Email' },
+            { name: 'starRating', type: 'number', title: 'Rating' }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'wholeSummary',
+      title: 'Summary',
+      type: 'array',
+      of: [
+        {
+          name: 'keyIdeas',
+          title: 'Key Ideas',
+          type: 'object',
+          fields: [
+            {
+              name: 'keyidea',
+              title: 'Key Idea',
+              type: 'string'
+            },
+            {
+              name: 'summary',
+              title: 'Summary',
+              type: 'array',
+              of: [{ type: 'block' }]
+            },
           ]
         }
       ]
