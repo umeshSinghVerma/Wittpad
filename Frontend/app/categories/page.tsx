@@ -36,7 +36,7 @@ export default function page() {
     ];
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className='md:p-[18px] p-8 md:py-16 lg:w-[60%] m-auto'>
                 <div className='flex text-sm'>
                     <Link className='text-[#4e83fe]' href={"/categories"}>{"Categories >"}</Link>
@@ -59,7 +59,7 @@ export default function page() {
                     }
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

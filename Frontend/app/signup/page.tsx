@@ -19,7 +19,7 @@ export default function Page() {
     }
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className='flex flex-col lg:max-w-[35%] md:max-w-[50%]  m-auto'>
                 <h1 className='m-auto md:text-2xl lg:text-3xl font-bold text-blue-950 my-5'>Get unlimited access to the key ideas of
                     6,500+ non-fiction bestsellers</h1>
@@ -39,7 +39,7 @@ export default function Page() {
                 }}>Log in with Twitter</button>
                 <Link href={"/login"} className='m-auto text-[#4274f4]'>Already have an account? </Link>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

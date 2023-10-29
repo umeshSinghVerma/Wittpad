@@ -154,7 +154,7 @@ export default function page({ params }: { params: { id: string } }) {
     }
     return (
         <div className='w-full'>
-            <Header />
+            {/* <Header /> */}
             <div className='md:p-[18px] p-8 md:py-16 lg:w-[60%] m-auto'>
                 <div className='flex text-sm'>
                     <Link className='text-[#4e83fe] mr-2' href={"/categories"}>{"Categories >"}</Link>
@@ -238,7 +238,7 @@ export default function page({ params }: { params: { id: string } }) {
                     
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

@@ -1,15 +1,69 @@
-'use client'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import client from '@/sanity/client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 
-export default function page() {
-    const data = {
+async function getdata() {
+    const data = await client.fetch('*[_type == "book" && title == "THE HOBBIT" ]');
+    console.log("this is data obtained ", data);
+    const book = await data[0];
+    let authors = "";
+    book.book_author.map(async (author: any) => {
+        const rawdata: any = await client.getDocument(author._ref);
+        console.log("author ", rawdata)
+        // if (rawdata?.length > 0) {
+        authors = authors + " " + rawdata.authorName;
+        // }
+    })
+    let bookCategory: string | undefined = "";
+    const rawCategory: any = await client.getDocument(book.book_category._ref);
+    console.log("category ", rawCategory)
+    // if (rawCategory?.length > 0) {
+    bookCategory = rawCategory.name;
+    // }
+
+    let bookImageUrl: string | undefined = "";
+    const imageData: any = book.book_image.asset._ref;
+    const rawImage: any = await client.getDocument(imageData);
+    console.log("image ", rawImage)
+    // if (rawImage?.length > 0) {
+    bookImageUrl = rawImage.url;
+    // }
+
+
+    const alpha = {
+        description: book.about,
+        time: book.book_timeToRead,
+        topics: [book.book_topic],
+        title: book.title,
+        author: authors,
+        category: bookCategory,
+        imgUrl: bookImageUrl,
+        slogan: 'The Lord of the Rings #0',
+        rating: '4.7',
+        RatingReview: "3,783,925 Ratings",
+        Genres: "Fantasy, Classics, Fiction, Adventure, Young Adult, High Fantasy, Science Fiction Fantasy",
+        Summary: ["This is the Summary"],
+        BookEdition: "366 pages, Paperback",
+        MoreEditionLink: "#",
+        PublishingDate: "First published September 21, 1937",
+        aboutAuthor: `Ryan Holiday is an American author, media strategist, and bookstore owner. He's also the host of the Daily Stoic podcast. His other books include Lives of the Stoics, Courage is Calling, and The Obstacle is the Way.
+        Stephen Hanselman is a publisher and literary agent. He studied at Fresno Pacific University and obtained a Master's degree from Harvard Divinity School. The Daily Stoic is his first book as an author.`
+    }
+
+
+    return alpha;
+
+}
+
+export default async function page() {
+
+    const initalData = {
         category: 'Personal Development',
         slogan: 'The Lord of the Rings #0',
-        title: 'THE HOBBIT',
+        title: 'sdkjf',
         time: "33 min",
         author: 'J.R.R. Tolkien, Douglas A. Anderson, Michael Hague (Illustrator)',
         imgUrl: 'https://images.blinkist.io/images/books/5b73f3aab238e100073cda34/1_1/470.jpg',
@@ -26,10 +80,14 @@ export default function page() {
         aboutAuthor: `Ryan Holiday is an American author, media strategist, and bookstore owner. He's also the host of the Daily Stoic podcast. His other books include Lives of the Stoics, Courage is Calling, and The Obstacle is the Way.
         Stephen Hanselman is a publisher and literary agent. He studied at Fresno Pacific University and obtained a Master's degree from Harvard Divinity School. The Daily Stoic is his first book as an author.`
     }
-    const [showTableContent, setShowTableContent] = useState(false);
+    const data = await getdata();
+    // const [data, setData] = useState(initalData)
+    // window.data = data;
+
+    // const [showTableContent, setShowTableContent] = useState(false);
+    const showTableContent = false;
     return (
         <div>
-            <Header />
             <div className='lg:w-[60%] m-auto p-[18px]'>
                 <div className='gap-1 text-sm hidden md:flex'>
                     <Link className='text-blue-600' href={'/categories'}>{`Categories >`}</Link>
@@ -80,7 +138,7 @@ export default function page() {
                                 </div>
                             </div>
                             <div className='flex flex-col gap-5'>
-                                <button className='font-bold text-sm text-start text-blue-950' onClick={() => { setShowTableContent(!showTableContent) }}>Table of Contents</button>
+                                <button className='font-bold text-sm text-start text-blue-950'>Table of Contents</button>
                                 {showTableContent && <div className='underline text-sm flex flex-col gap-2'>
                                     <Link href={"#summary"}>{`${data.title} Summary of ${data.Summary.length} key ideas`}</Link>
                                     <Link href={"#aboutbook"}>{`What is ${data.title} about`}</Link>
@@ -94,7 +152,7 @@ export default function page() {
                         </div>
                     </div>
                     <div className='mt-4 flex items-center justify-center bg-[#ebd6c6]  -m-[18px] p-10 h-min'>
-                        <Image src={data.imgUrl} width={200} height={400} alt={data.title} />
+                        <Image src={data.imgUrl || ""} width={200} height={400} alt={data.title} />
                     </div>
                 </div>
                 <div className='my-4'>
@@ -159,7 +217,6 @@ export default function page() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

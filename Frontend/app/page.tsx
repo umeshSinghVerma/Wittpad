@@ -2,8 +2,10 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import RatingCards from '@/components/RatingCards'
+import client from '@/sanity/client'
 import Image from 'next/image'
 import Link from 'next/link'
+
 
 export default function Home() {
   const ratings = [
@@ -28,14 +30,83 @@ export default function Home() {
       user: 'Thi Viet Quynh N.'
     },
   ]
+  async function changFn() {
+    // const posts = await client.fetch('*[_type == "book" && title == "Thinking cycle of the day"]')
+    // const treat = posts[0];
+    // const refobt = treat.other._ref;
+    const alpha = await client.getDocument("image-534a6c489d81447449ab093ec94156c786e14a14-6000x4000-jpg");
+    console.log("this is posts ",alpha);
+    // const post = {
+    //   _name: 'post',
+    //   _type: 'document',
+    //   title: 'PostTitle',
+    //   fields: [
+    //     {
+    //       name: 'trial9',
+    //       label: 'Tria9 1',
+    //       type: 'string'
+    //     },
+    //   ]
+    // }
+    // const posts = await client.create(post)
+    // console.log("this is the post ",post);
+    // const data = await client.fetch(`*[ _type == 'trial' ]`)
+    // console.log(`Number of documents: ${JSON.stringify(data)}`)
+    // const alpha = await client.fetch(`count(*)`)
+    // console.log(`Number of documents: ${JSON.stringify(alpha)}`)
+    // client
+    //   .delete('056ba845-4d23-4f1e-acb1-f5df26240f61')
+    //   .then(() => {
+    //     console.log('Bike deleted')
+    //   })
+    //   .catch((err) => {
+    //     console.error('Delete failed: ', err.message)
+    //   })
+
+    // client.patch('7d49cac7-26ae-4106-b102-7851a8eabe6c').unset(['trial']).commit()
+
+
+    // Code to update any thing inside the sanity document
+
+
+    // client
+    //   .patch({query : "*[ _type == 'trial' && trial1 == 'newhelloupdated' ]"}) // Document ID to patch
+    //   // .set({ trial1: "newhelloupdated" }) // Shallow merge
+    //   .setIfMissing({arraytrial: []})
+    //   // .insert('after', 'arraytrial[-1]', ['this is added in first position now upar']) // whenever there is the single thing to add into the array ;  here arraytrial is the name of the array and -1 is the position where we want to add the new element into the array
+    //   // .append('arraytrial', ['this is to last'])
+    //   .insert('after','arraytrial[-1]',[{bookname:'firstbook',bookname2:'secondbook'}])
+    //   .commit({autoGenerateArrayKeys: true}) // Perform the patch and return a promise
+    //   .then((updatedBike) => {
+    //     console.log('Hurray, the bike is updated! New document:')
+    //     console.log(updatedBike)
+    //   })
+    //   .catch((err) => {
+    //     console.error('Oh no, the update failed: ', err.message)
+    //   })
+
+
+
+
+    // const doc = {
+    //   _type: 'bike',
+    //   name: 'Sanity Tandem Extraordinaire',
+    //   seats: 2,
+    // }
+
+    // client.create(doc).then((res) => {
+    //   console.log(`Bike was created, document ID is ${res._id}`)
+    // })
+  }
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className='lg:w-[65%] m-auto p-[18px]'>
         <div>
           <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
             Understand books & podcasts in 15 minutes
           </div>
+          <button onClick={() => { changFn() }}>Fetch function</button>
           <div className='flex flex-wrap justify-between'>
             <div className='flex md:flex-col gap-5 md:gap-0 items-center justify-center md:max-w-[200px]'>
               <img src="/keyIdeas.svg" alt="" width={80} height={50} />
@@ -140,7 +211,7 @@ export default function Home() {
 
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

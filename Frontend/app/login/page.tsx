@@ -19,7 +19,7 @@ export default function Page() {
   }
   return (
     <div>
-      <Header/>
+      {/* <Header/> */}
       <div className='flex flex-col lg:max-w-[35%] md:max-w-[50%]  m-auto'>
         <h1 className='m-auto text-3xl font-bold text-blue-950 my-5'>Log in to Wittpad</h1>
         <input type="email" name="email" id="email" placeholder='Email' className='border-2 m-2 border-gray-700 p-2' />
@@ -39,7 +39,7 @@ export default function Page() {
         <Link href={"/signup"} className='m-auto  text-gray-800'>You do not have an account? </Link>
         <Link href={"#"} className='m-auto  text-gray-800'>Forgot your password? </Link>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 }
