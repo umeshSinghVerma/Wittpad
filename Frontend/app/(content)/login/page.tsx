@@ -3,9 +3,6 @@ import { useSession } from 'next-auth/react'
 import { signIn, signOut } from 'next-auth/react'
 import Link from 'next/link';
 import React from 'react'
-import { options } from '../api/auth/[...nextauth]/options';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 export default function Page() {
   const { data: session } = useSession()
   if (session) {
