@@ -19,7 +19,8 @@ async function getdata(id: string) {
         const rawdata: any = await client.getDocument(a._ref);
         authors = authors + " " + rawdata.authorName;
         console.log("Rawdata: ", { authors, aboutAuthorArray, rawdata });
-        aboutAuthorArray.push(rawdata.aboutAuthor);
+        const authortext = JSON.stringify(rawdata.aboutAuthor);
+        aboutAuthorArray.push(authortext);
     }
 
 
