@@ -67,6 +67,7 @@ async function getdata(id:string) {
 export default async function page({ params }: { params: { id: string } }) {
     const bookTitle: string = decodeURIComponent(params.id)
     const data = await getdata(bookTitle);
+    console.log("this is the data we show ",data);
     return (
         <div>
             <div className='lg:w-[60%] m-auto p-[18px]'>
