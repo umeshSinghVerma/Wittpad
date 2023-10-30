@@ -4,9 +4,9 @@ import Link from 'next/link'
 import React from 'react'
 import { PortableText } from '@portabletext/react'
 import TableComponents from '@/components/TableComponents'
-async function getdata(id:string) {
+async function getdata(id: string) {
     const beta = await client.fetch(`*[_type == "book" && title == "${id}" ]`, { cache: 'no-store' });
-    if(beta.length==0){
+    if (beta.length == 0) {
         throw Error("this book is not available");
     }
     const data = JSON.parse(JSON.stringify(beta));
@@ -14,11 +14,12 @@ async function getdata(id:string) {
     const book = await data[0];
 
     let authors = "";
-    let aboutAuthor: Array<string> = [];
+    let aboutAuthorArray: Array<string> = [];
     for (const a of book.book_author) {
         const rawdata: any = await client.getDocument(a._ref);
         authors = authors + " " + rawdata.authorName;
-        aboutAuthor.push(rawdata.aboutAuthor);
+        console.log("Rawdata: ", { authors, aboutAuthorArray, rawdata });
+        aboutAuthorArray.push(rawdata.aboutAuthor);
     }
 
 
@@ -56,7 +57,7 @@ async function getdata(id:string) {
         rating: rating,
         RatingReview: `${ratingNumber} Ratings`,
         summary: book.wholeSummary,
-        aboutAuthor: aboutAuthor
+        aboutAuthor: aboutAuthorArray
     }
 
 
@@ -67,7 +68,7 @@ async function getdata(id:string) {
 export default async function page({ params }: { params: { id: string } }) {
     const bookTitle: string = decodeURIComponent(params.id)
     const data = await getdata(bookTitle);
-    console.log("this is the data we show ",data);
+    // console.log("this is the data we show ", data);
     return (
         <div>
             <div className='lg:w-[60%] m-auto p-[18px]'>
