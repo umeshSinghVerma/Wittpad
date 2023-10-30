@@ -4,25 +4,29 @@ import Link from 'next/link'
 import React from 'react'
 import { PortableText } from '@portabletext/react'
 import TableComponents from '@/components/TableComponents'
-async function getdata() {
-    const beta = await client.fetch('*[_type == "book" && title == "THE HOBBIT" ]', { cache: 'no-store' });
+async function getdata(id:string) {
+    const beta = await client.fetch(`*[_type == "book" && title == "${id}" ]`, { cache: 'no-store' });
+    if(beta.length==0){
+        throw Error("this book is not available");
+    }
     const data = JSON.parse(JSON.stringify(beta));
 
     const book = await data[0];
 
     let authors = "";
     let aboutAuthor: Array<string> = [];
-    book.book_author.map(async (author: any) => {
-        const rawdata: any = await client.getDocument(author._ref);
+    for (const a of book.book_author) {
+        const rawdata: any = await client.getDocument(a._ref);
         authors = authors + " " + rawdata.authorName;
         aboutAuthor.push(rawdata.aboutAuthor);
-    })
+    }
+
 
     let bookCategory: Array<string> | undefined = [];
-    book.categories.map(async (category: any) => {
-        const rawCategory: any = await client.getDocument(category._ref);
+    for (const a of book.categories) {
+        const rawCategory: any = await client.getDocument(a._ref);
         bookCategory?.push(rawCategory.name);
-    })
+    }
 
     let bookImageUrl: string | undefined = "";
     const imageData: any = book.book_image.asset._ref;
@@ -60,9 +64,9 @@ async function getdata() {
 
 }
 
-export default async function page() {
-
-    const data = await getdata();
+export default async function page({ params }: { params: { id: string } }) {
+    const bookTitle: string = decodeURIComponent(params.id)
+    const data = await getdata(bookTitle);
     return (
         <div>
             <div className='lg:w-[60%] m-auto p-[18px]'>
