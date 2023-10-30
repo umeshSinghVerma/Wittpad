@@ -9,6 +9,11 @@ const authorDetails = {
             type: 'string'
         },
         {
+            name:'aboutAuthor',
+            title:'About',
+            type: 'string'
+        },
+        {
             name: 'books',
             title: 'Books Written',
             type: 'array',

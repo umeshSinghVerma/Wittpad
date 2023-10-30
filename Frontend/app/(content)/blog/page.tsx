@@ -39,7 +39,6 @@ export default function page() {
     ]
     return (
         <div>
-            {/* <Header /> */}
             <div className='lg:w-[70%] m-auto p-[18px]'>
                 <div className='flex flex-col md:flex-row justify-between text-blue-950 text-sm border-b-2 border-blue-950 pb-2 font-bold'>
                     <button>Articles</button>
@@ -62,7 +61,6 @@ export default function page() {
                     }
                 </div>
             </div>
-            {/* <Footer /> */}
         </div>
     )
 }
