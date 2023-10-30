@@ -74,10 +74,6 @@ export default async function page() {
     }
     const data = await getdata();
     console.log(data.summary);
-    // const [data, setData] = useState(initalData)
-    // window.data = data;
-
-    // const [showTableContent, setShowTableContent] = useState(false);
     const showTableContent = false;
     return (
         <div>
