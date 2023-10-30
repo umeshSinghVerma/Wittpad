@@ -16,10 +16,10 @@ async function getdata(id: string) {
     let authors = "";
     let aboutAuthorArray: Array<string> = [];
     for (const a of book.book_author) {
-        const rawdata: any = await client.getDocument(a._ref);
-        authors = authors + " " + rawdata.authorName;
+        const rawdata: any = await client.fetch(`*[ _id == "${a._ref}" ]`, { cache: 'no-store' });
+        authors = authors + " " + rawdata[0].authorName;
         console.log("Rawdata: ", { authors, aboutAuthorArray, rawdata });
-        const authortext = JSON.stringify(rawdata.aboutAuthor);
+        const authortext = JSON.stringify(rawdata[0].aboutAuthor);
         aboutAuthorArray.push(authortext);
     }
 
