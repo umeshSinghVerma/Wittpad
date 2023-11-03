@@ -107,7 +107,20 @@ export default function Home() {
       <Header />
       <div className='lg:w-[65%] m-auto p-[18px]'>
         <div>
-          <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
+          <div className='w-full mb-10 relative md:inline hidden -z-10'>
+            <img src="/herodesktop.png" alt='alpha' />
+            <div className='my-4 absolute bottom-[30%] left-[3.5%]'>
+              <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 md:inline hidden border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+            </div>
+          </div>
+          <div className='w-full mb-10 md:hidden flex flex-col justify-center items-center'>
+            <img src="/heromobileheading.png" alt="heading" />
+            <div className='my-4'>
+              <Link href={"/login"} className='py-3 px-10 font-semibold text-sm text-blue-950 border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+            </div>
+            <img src="/heromobile.png" alt='alpha' />
+          </div>
+          <div className='text-center md:text-3xl md:mt-10 font-bold text-blue-950 mb-5'>
             Understand books & podcasts in 15 minutes
           </div>
           <button onClick={() => { changFn() }}>Fetch function</button>
@@ -171,7 +184,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className='flex w-full flex-col md:flex-row my-16 justify-around gap-12 md:items-center'>
+        <div className='flex w-full flex-col md:flex-row mt-16 justify-around gap-12 md:items-center'>
           <div>
             <img src="https://www.blinkist.com/packs/static/use-cases/images/image_en@2x-31f2ab90ccaaf56e5713.png" alt="" className='max-h-[400px]' />
           </div>
@@ -203,7 +216,7 @@ export default function Home() {
       <div className='my-4 flex justify-center'>
         <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
       </div>
-      <div className='text-center md:text-3xl font-bold text-blue-950 mb-5 mt-10'>
+      {/* <div className='text-center md:text-3xl font-bold text-blue-950 mb-5 mt-10'>
         Start growing with Blinkist now
       </div>
       <div>
@@ -212,8 +225,7 @@ export default function Home() {
           <p className='text-4xl text-blue-950 font-extrabold whitespace-nowrap'>28 Million</p>
           <p className='text-sm text-gray-700 whitespace-nowrap'>Downloads on all platforms</p>
         </div>
-
-      </div>
+      </div> */}
 
       <Footer />
     </div>

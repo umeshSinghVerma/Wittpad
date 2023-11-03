@@ -49,16 +49,18 @@ async function getdata(id: string) {
         aboutBook: book.about,
         time: book.book_timeToRead,
         topics: book.book_topic,
+        category: bookCategory,
+        bestQuote: book.book_bestQuote,
+        summary: book.wholeSummary,
+        
+        aboutAuthor: aboutAuthorArray,
+
         title: book.title,
         author: authors,
-        category: bookCategory,
         imgUrl: bookImageUrl,
         slogan: book.book_tagline,
-        bestQuote: book.book_bestQuote,
         rating: rating,
-        RatingReview: `${ratingNumber} Ratings`,
-        summary: book.wholeSummary,
-        aboutAuthor: aboutAuthorArray
+        RatingReview: `${ratingNumber} Ratings`
     }
 
 
