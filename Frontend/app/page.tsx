@@ -1,14 +1,12 @@
-'use client'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import RatingCards from '@/components/RatingCards'
 import client from '@/sanity/client'
-import Image from 'next/image'
 import Link from 'next/link'
-
+require ("dotenv").config();
 
 export default function Home() {
-
+  console.log("yo pappe ",process.env.GOOGLE_CLIENT_ID)
   const ratings = [
     {
       rating: 5,
@@ -107,7 +105,7 @@ export default function Home() {
       <Header />
       <div className='lg:w-[65%] m-auto p-[18px]'>
         <div>
-          <div className='w-full mb-10 relative md:inline hidden -z-10'>
+          <div className='w-full mb-10 relative md:inline hidden'>
             <img src="/herodesktop.png" alt='alpha' />
             <div className='my-4 absolute bottom-[30%] left-[3.5%]'>
               <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 md:inline hidden border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
@@ -123,7 +121,6 @@ export default function Home() {
           <div className='text-center md:text-3xl md:mt-10 font-bold text-blue-950 mb-5'>
             Understand books & podcasts in 15 minutes
           </div>
-          <button onClick={() => { changFn() }}>Fetch function</button>
           <div className='flex flex-wrap justify-between'>
             <div className='flex md:flex-col gap-5 md:gap-0 items-center justify-center md:max-w-[200px]'>
               <img src="/keyIdeas.svg" alt="" width={80} height={50} />
@@ -200,7 +197,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className='text-center md:text-3xl font-bold text-blue-950 mb-5'>
+        <div className='text-center md:text-3xl font-bold text-blue-950 mb-5 md:mt-8'>
           What our members say
         </div>
         <div className='flex justify-center flex-col gap-8 items-center'>

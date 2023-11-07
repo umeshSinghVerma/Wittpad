@@ -10,6 +10,11 @@ const book = {
       type: 'string',
     },
     {
+      name:'slug',
+      title:"Slug",
+      type:'string'
+    },
+    {
       name: 'book_image',
       title: 'Image',
       type: 'image',
@@ -18,15 +23,30 @@ const book = {
       }
     },
     {
+      name: 'imgUrl',
+      title: 'Image url',
+      type: 'url'
+    },
+    // {
+    //   name: 'book_author',
+    //   title: 'Author',
+    //   type: 'array',
+    //   of: [{
+    //     name: 'authors',
+    //     title: "Author",
+    //     type: 'reference',
+    //     to: [{ type: 'authorDetails' }]
+    //   }]
+    // },
+    {
       name: 'book_author',
       title: 'Author',
-      type: 'array',
-      of: [{
-        name: 'authors',
-        title: "Author",
-        type: 'reference',
-        to: [{ type: 'authorDetails' }]
-      }]
+      type: 'string'
+    },
+    {
+      name: 'book_aboutAuthor',
+      title: 'About Author',
+      type: 'string'
     },
     {
       name: 'book_tagline',
@@ -47,14 +67,8 @@ const book = {
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [
-        {
-          name: 'book_category',
-          title: 'Category',
-          type: 'reference',
-          to: [{ type: 'category' }]
-        }
-      ]
+      of: [{ type: 'string' }],
+      validation: (Rule:any) => Rule.unique()
     },
     {
       name: 'book_topic',
@@ -77,6 +91,11 @@ const book = {
       name: 'book_buyLink',
       title: 'Buy Link',
       type: 'url',
+    },
+    {
+      name:'book_rating',
+      title:'Rating',
+      type:'string'
     },
     {
       name: 'book_ratingsReceived',
@@ -112,8 +131,9 @@ const book = {
             {
               name: 'summary',
               title: 'Summary',
-              type: 'array',
-              of: [{ type: 'block' }]
+              type: 'string'
+              // type: 'array',
+              // of: [{ type: 'block' }]
             },
           ]
         }

@@ -21,7 +21,19 @@ export default function Page() {
         <h1 className='m-auto text-3xl font-bold text-blue-950 my-5'>Log in to Wittpad</h1>
         <input type="email" name="email" id="email" placeholder='Email' className='border-2 m-2 border-gray-700 p-2' />
         <input type="password" name="password" id="password" placeholder='Password' className='border-2 m-2 border-gray-700 p-2' />
-        <button className='m-2 bg-green-400 rounded p-2 border-0'>Log in with email</button>
+        <button className='m-2 bg-green-400 rounded p-2 border-0' onClick={() => {
+              const emailElement = document.getElementById('email') as HTMLInputElement | null;
+              const passwordElement = document.getElementById('password') as HTMLInputElement | null;
+          
+              if (emailElement && passwordElement) {
+                const email = emailElement.value;
+                const password = passwordElement.value;
+                signIn('credentials', { email, password });
+              } else {
+                console.error("Email or password element not found");
+              }
+        }
+        }>Log in with email</button>
         <div className='flex'>
           <button className='flex-grow text-white m-2 bg-[#3a579d] rounded p-2 border-0' onClick={() => {
             signIn("facebook");
