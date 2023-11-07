@@ -20,7 +20,6 @@ async function getSummaryFromSanity(bookName: string, authorName: string, setDat
         getSummaryFromGPT(bookName, authorName, setData)
     }
     else {
-        console.log("this is beta ",beta);
         if (beta[0].wholeSummary == null) {
             getSummaryFromGPT(bookName, authorName, setData)
         } else {
