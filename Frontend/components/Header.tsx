@@ -49,15 +49,19 @@ export default function Header() {
         try {
             if (search != '') {
                 setLoading(true);
-                const response = await fetch(`http://localhost:3001/api/searchBook?book=${search}`);
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok.');
-                }
-                const searchData = await response.json();
-                console.log("this is searchData ", searchData);
-                setSearchResult(searchData.data);
-                return searchData;
+                const url = 'https://ystgfrwnmuf3ckhfiugrcopjye0wrtzs.lambda-url.us-east-2.on.aws/';
+                const searchData = await axios.post('https://ystgfrwnmuf3ckhfiugrcopjye0wrtzs.lambda-url.us-east-2.on.aws/',{
+                    searchBook:search
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:3000',
+                        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                    }
+                })
+                setSearchResult(searchData.data.data);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -130,8 +134,8 @@ export default function Header() {
                         variant="filled"
                         size="small"
                         onChange={(e) => { setSearch(() => (e.target.value)) }}
-                        onKeyDown={(e)=>{
-                            if(e.key=='Enter'){
+                        onKeyDown={(e) => {
+                            if (e.key == 'Enter') {
                                 getSearchResults();
                             }
                         }}

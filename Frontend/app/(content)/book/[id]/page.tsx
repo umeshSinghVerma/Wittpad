@@ -9,6 +9,7 @@ import AboutAuthor from '@/components/AboutAuthor'
 import Summary from '@/components/Summary'
 import BestQuote from '@/components/BestQuote'
 import Topics from '@/components/Topics'
+import axios from 'axios'
 
 async function uploadData(data: any, id: string) {
     console.log(" I have came in upload data functon ");
@@ -119,9 +120,26 @@ async function getdata(id: string) {
 }
 async function getScrapedData(id: string) {
     const bookUrl = `https://biblioreads.eu.org/book/show/${id}`;
-    const response = await fetch(`http://localhost:3001/api/getBook?bookUrl=${bookUrl}`);
-    const scrapedData = await response.json();
-    uploadData(scrapedData, id);
+    let scrapedData = [];
+    try {
+        const searchData = await axios.post('https://ystgfrwnmuf3ckhfiugrcopjye0wrtzs.lambda-url.us-east-2.on.aws/', {
+            getBook: bookUrl
+        },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                }
+            })
+        scrapedData = searchData.data;
+        uploadData(scrapedData, id);
+        return scrapedData;
+    }
+    catch (e) {
+        console.log(e)
+    }
     return scrapedData;
 }
 
