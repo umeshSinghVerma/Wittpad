@@ -3,6 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
+import axios from "axios";
 export const options: NextAuthOptions = {
     providers: [
         FacebookProvider({
@@ -27,25 +28,21 @@ export const options: NextAuthOptions = {
                 if (!credentials?.email || !credentials.password) {
                   return null;
                 }
-            
-                // Replace this with your actual authentication logic.
-                // For example, you might want to query a database to check if the credentials are valid.
-                // Assuming you have a database of users:
+                const Fetcheduser :any = await axios.get(`http://localhost:3000/api/user?email=${credentials.email}`)
+                const userData = Fetcheduser.data;
                 const users = [
-                  { username: "dave", email: "dave@example.com", password: "nextauth" },
-                  // Add more user objects here 
+                  {  email: userData.data.id, password: "nextauth" },
                 ];
-            
-                // Find the user that matches the provided email and password
+
                 const user = users.find(
                   (user) =>
                     user.email === credentials.email && user.password === credentials.password
                 );
             
                 if (user) {
-                  return { ...user, id: user.email }; // Return the user object with an ID
+                  return { ...user, id: user.email };
                 } else {
-                  return null; // Return null if authentication failed
+                  return null;
                 }
               }
         })

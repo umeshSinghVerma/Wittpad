@@ -65,7 +65,7 @@ export default function Header() {
             }
         } catch (error) {
             console.error("Error fetching data:", error);
-            throw error; // Re-throw the error to handle it where this function is being called.
+            throw error;
         }
         finally {
             setLoading(false);
@@ -108,7 +108,7 @@ export default function Header() {
                                 let link = book.link;
                                 link = link.replace("/show", "");
                                 return (
-                                    <Link href={`http://localhost:3000${link}`} className='hover:text-blue-600' onClick={() => { setSearchResult([]) }}>
+                                    <Link href={`${link}`} className='hover:text-blue-600' onClick={() => { setSearchResult([]) }}>
                                         <div className='text-xs flex my-3 w-full h-min bg-white p-3 gap-5 justify-center items-center'>
                                             <div>
                                                 <img src={book.coverImage} alt="" className='max-h-[60px]' />
