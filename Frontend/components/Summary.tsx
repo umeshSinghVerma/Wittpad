@@ -14,21 +14,24 @@ async function uploadSummary(bookName: string, summaryArray: Array<{ keyidea: st
         })
 }
 
-async function getSummaryFromSanity(bookName: string, authorName: string, setData: React.Dispatch<React.SetStateAction<string>>, setSanitySummary: React.Dispatch<React.SetStateAction<never[]>>) {
+async function getSummaryFromSanity(bookName: string, authorName: string, setData: React.Dispatch<React.SetStateAction<string>>, setSanitySummary: React.Dispatch<React.SetStateAction<never[]>>, setStoredSummary: React.Dispatch<React.SetStateAction<SummaryType[]>>) {
     const beta = await client.fetch(`*[_type == "book" && title == "${bookName}" ]{wholeSummary}`, { cache: 'no-store' });
     if (beta.length == 0) {
-        getSummaryFromGPT(bookName, authorName, setData)
+        getSummaryFromGPT(bookName, authorName, setData, setStoredSummary)
     }
     else {
         if (beta[0].wholeSummary == null) {
-            getSummaryFromGPT(bookName, authorName, setData)
+            getSummaryFromGPT(bookName, authorName, setData, setStoredSummary)
         } else {
             setSanitySummary(beta[0].wholeSummary);
+            setStoredSummary((prev) => {
+                return ([...prev, { type: "sanity", Summary: beta[0].wholeSummary }])
+            });
         }
     }
 }
 
-async function getSummaryFromGPT(bookName: string, authorName: string, setData: any) {
+async function getSummaryFromGPT(bookName: string, authorName: string, setData: any, setStoredSummary: React.Dispatch<React.SetStateAction<SummaryType[]>>) {
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
@@ -150,29 +153,70 @@ async function getSummaryFromGPT(bookName: string, authorName: string, setData: 
         summaryArray.push({ keyidea: keyIdeas[i], summary: summaries[i] })
     }
     uploadSummary(bookName, summaryArray);
+    setStoredSummary(prev => {
+        return ([...prev, { type: "gpt", Summary: summaryArray }])
+    })
 }
-
+interface SummaryType {
+    type: string;
+    Summary: any;
+}
 
 export default function Summary({ bookName, authorName }: { bookName: string, authorName: string }) {
     const [sanitySummary, setSanitySummary] = useState([]);
+    const [storedSummary, setStoredSummary] = useState<SummaryType[]>([]);
     const [data, setData] = useState('');
+    const [summaryNumber, setSummaryNumber] = useState<number|undefined>(1);
+    const [currentSummary,setCurrentSummary]=useState([]);
+    console.log(summaryNumber);
     useEffect(() => {
         if (bookName && authorName) {
-            getSummaryFromSanity(bookName, authorName, setData, setSanitySummary);
+            getSummaryFromSanity(bookName, authorName, setData, setSanitySummary, setStoredSummary);
         }
     }, [bookName, authorName])
+    useEffect(()=>{
+        if(summaryNumber!=undefined && storedSummary.length>0){
+            console.log("I came here");
+            setCurrentSummary(storedSummary[summaryNumber-1].Summary);
+        }
+    },[summaryNumber])
     return (
         <>
             {data !== '' ? (
                 <div dangerouslySetInnerHTML={{ __html: data }} />
             ) : (
-                sanitySummary.length>0 && sanitySummary.map((obj: any, key: number) => (
+                currentSummary.map((obj: any, key: number) => (
                     <div key={key} className='my-4'>
                         <p className='text-[1.25rem] font-bold text-blue-950'>{obj.keyidea}</p>
                         <p className='text-[1rem] text-blue-950'>{obj.summary}</p>
                     </div>
                 ))
             )}
+            <button className='py-3 px-10 font-semibold text-base text-blue-950 md:inline hidden border-0 bg-green-400 rounded' onClick={() => {
+                if (bookName && authorName) {
+                    setData("");
+                    getSummaryFromGPT(bookName, authorName, setData, setStoredSummary);
+                }
+            }}>Generate new summary</button>
+            <button onClick={() => {
+                setSummaryNumber((prev: number|undefined) => {
+                    if (prev!=undefined && prev < storedSummary.length) {
+                        return (prev + 1);
+                    }else{
+                        return storedSummary.length
+                    }
+                })
+            }
+            }>Next</button>
+            <button onClick={() => {
+                setSummaryNumber((prev: number|undefined) => {
+                    if (prev!=undefined && prev > 1) {
+                        return (prev -1);
+                    }else{
+                        return 1;
+                    }
+                })
+            }}>Previous</button>
 
         </>
     )

@@ -9,7 +9,9 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { signOut, useSession } from 'next-auth/react'
 export default function Header() {
+    const { data: session } = useSession()
     // Array 1: Explore by category
     const categories = [
         "Biography & Memoir",
@@ -164,7 +166,12 @@ export default function Header() {
                     </div>
                 </div>
                 <div className='flex text-sm'>
-                    <Link href={"/login"} className='p-2 border-0 md:text-base text-xs bg-green-400 rounded'>Log in</Link>
+                    <Link href={session ? "/savedBooks":"/login"} className='p-2 border-0 md:text-base text-xs px-4 bg-green-400 rounded'>{session ? "Saved Books":`Log in`}</Link>
+                    {
+                        session && <button className='text-md text-blue-950 m-3' onClick={()=>{
+                            signOut();
+                        }}>Logout</button>
+                    }
                 </div>
             </div>
         </div>

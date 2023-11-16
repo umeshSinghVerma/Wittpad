@@ -1,12 +1,12 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import LoginButton from '@/components/LoginButton'
 import RatingCards from '@/components/RatingCards'
 import client from '@/sanity/client'
 import Link from 'next/link'
 require ("dotenv").config();
 
 export default function Home() {
-  console.log("yo pappe ",process.env.GOOGLE_CLIENT_ID)
   const ratings = [
     {
       rating: 5,
@@ -108,13 +108,13 @@ export default function Home() {
           <div className='w-full mb-10 relative md:inline hidden'>
             <img src="/herodesktop.png" alt='alpha' />
             <div className='my-4 absolute bottom-[30%] left-[3.5%]'>
-              <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 md:inline hidden border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+              <LoginButton/>
             </div>
           </div>
           <div className='w-full mb-10 md:hidden flex flex-col justify-center items-center'>
             <img src="/heromobileheading.png" alt="heading" />
             <div className='my-4'>
-              <Link href={"/login"} className='py-3 px-10 font-semibold text-sm text-blue-950 border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+              <LoginButton/>
             </div>
             <img src="/heromobile.png" alt='alpha' />
           </div>
@@ -193,7 +193,7 @@ export default function Home() {
             <p>Walking</p>
             <p>Relaxing</p>
             <div className='my-4'>
-              <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 md:inline hidden border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+              <LoginButton/>
             </div>
           </div>
         </div>
@@ -211,7 +211,7 @@ export default function Home() {
         </div>
       </div>
       <div className='my-4 flex justify-center'>
-        <Link href={"/login"} className='py-3 px-10 font-semibold text-base text-blue-950 border-0 bg-green-400 rounded'>Log in to Listen Audio</Link>
+        <LoginButton/>
       </div>
       {/* <div className='text-center md:text-3xl font-bold text-blue-950 mb-5 mt-10'>
         Start growing with Blinkist now

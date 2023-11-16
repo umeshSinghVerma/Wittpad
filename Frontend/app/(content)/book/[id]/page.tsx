@@ -10,9 +10,34 @@ import Summary from '@/components/Summary'
 import BestQuote from '@/components/BestQuote'
 import Topics from '@/components/Topics'
 import axios from 'axios'
+import Favourite from '@/components/Favourite'
+import { getServerSession } from "next-auth"
 
+async function getStatus(user: any,bookTitle: string,bookAuthor:string,bookImg:string) {
+    const previousData = await axios.get(`http://localhost:3000/api/user?email=${user?.email}`, {
+        headers: {
+            Authorization: `Bearer ${user?.name}`
+        }
+    });
+    const oldData = { ...previousData.data.data };
+    const oldSavedBooks = oldData?.savedBooks;
+    console.log(oldSavedBooks);
+    if(oldData?.savedBooks){
+        const obj = {author:bookAuthor,title:bookTitle,img:bookImg};
+        let flag = 0;
+        for(let i=0;i<oldSavedBooks.length;i++){
+            let element = oldSavedBooks[i];
+            console.log('elements ',element);
+            if(element.author === obj.author && element.title === obj.title && element.img === obj.img){
+                flag=1;
+                return true
+            }
+        };
+    }else{
+        return false;
+    }
+}
 async function uploadData(data: any, id: string) {
-    console.log(" I have came in upload data functon ");
     const doc = {
         _type: 'book',
         slug: id,
@@ -146,7 +171,9 @@ async function getScrapedData(id: string) {
 export default async function Page({ params }: { params: { id: string } }) {
     const bookTitle: string = decodeURIComponent(params.id)
     const data = await getdata(bookTitle);
-    // console.log('ye data aaya',data);
+    
+    const alpha = await getServerSession();
+    const bookStatus = await getStatus(alpha?.user,data.title,data.author,data.imgUrl);
 
     return (
         <div>
@@ -161,8 +188,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <div className='flex flex-col-reverse md:flex-row md:gap-10 justify-between'>
                     <div>
                         <p className='text-[#6d787e] mt-12 mb-4 md:my-4 font-semibold'>Better than a summary</p>
-                        <div className='text-3xl font-bold text-blue-950 mb-5 '>
-                            {data.title}
+                        <div className='flex gap-5'>
+                            <div className='text-3xl font-bold text-blue-950 mb-5 '>
+                                {data.title}
+                            </div>
+                            <Favourite bookTitle={data.title} bookImg={data.imgUrl} bookAuthor={data.author} initialStatus={bookStatus}/>
                         </div>
                         <div className='font-bold text-blue-950 mb-5 whitespace-break-spaces text-sm'>
                             {data.author}
