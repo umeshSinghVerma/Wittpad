@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         const token = authHeader ? authHeader.split(' ')[1] : null;
         const jwtdata = jwt.verify(token, process.env.SECRET_KEY);
 
-        const previousData = await axios.get(`http://localhost:3000/api/user?email=${body.id}`, {
+        const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${body.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -95,7 +95,7 @@ export async function DELETE(request: Request) {
         const token = authHeader ? authHeader.split(' ')[1] : null;
         const jwtdata = jwt.verify(token, process.env.SECRET_KEY);
 
-        const previousData = await axios.get(`http://localhost:3000/api/user?email=${body.id}`, {
+        const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${body.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

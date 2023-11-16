@@ -15,7 +15,7 @@ export default function Favourite({ bookTitle,bookImg,bookAuthor,initialStatus }
             {session && <div>
                 <IconButton onClick={() => {
                     if (favourite) {
-                        axios.delete(`http://localhost:3000/api/user?email=${session.user?.email}`, {
+                        axios.delete(`https://wittpad-alpha.vercel.app/api/user?email=${session.user?.email}`, {
                             data: {
                                 id: session.user?.email,
                                 removeBook: {author:bookAuthor,title:bookTitle,img:bookImg,link:pathname}
@@ -26,7 +26,7 @@ export default function Favourite({ bookTitle,bookImg,bookAuthor,initialStatus }
                         })
                         setFavoutite(false);
                     } else {
-                        axios.post(`http://localhost:3000/api/user?email=${session.user?.email}`, {
+                        axios.post(`https://wittpad-alpha.vercel.app/api/user?email=${session.user?.email}`, {
                             id: session.user?.email,
                             savedBooks: {author:bookAuthor,title:bookTitle,img:bookImg,link:pathname}
                         }, {

@@ -5,7 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 async function getSavedBook(user: any) {
-    const previousData = await axios.get(`http://localhost:3000/api/user?email=${user?.email}`, {
+    const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${user?.email}`, {
         headers: {
             Authorization: `Bearer ${user?.name}`
         }

@@ -58,7 +58,7 @@ export default function Header() {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+                        'Access-Control-Allow-Origin': 'https://wittpad-alpha.vercel.app,https://wittpad-alpha.vercel.app',
                         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                         'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                     }
