@@ -21,7 +21,7 @@ async function getSavedBook(user: any) {
 export default async function page() {
     const session = await getServerSession();
     if (!session) {
-        redirect('/login');
+        redirect('/');
     }
 
     const savedBooks = await getSavedBook(session?.user);
@@ -33,7 +33,7 @@ export default async function page() {
                 </div>
                 <div className='flex flex-col gap-5'>
                     {
-                        savedBooks.map((book: any, key: any) => {
+                        savedBooks && savedBooks.length>0  && savedBooks.map((book: any, key: any) => {
                             return (
                                 <Link href={book?.link} className='hover:text-blue-600 hover:border'>
                                     <div className='text-sm flex my-3 w-full h-min bg-white p-3 gap-5 justify-center items-center'>

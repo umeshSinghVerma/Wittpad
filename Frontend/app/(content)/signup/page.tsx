@@ -2,17 +2,12 @@
 import { useSession } from 'next-auth/react'
 import { signIn, signOut } from 'next-auth/react'
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import React from 'react'
 export default function Page() {
     const { data: session } = useSession()
     if (session) {
-        console.log("this is session ", session);
-        return (
-            <>
-                Signed in as {session.user?.email} <br />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        )
+        redirect("/");
     }
     return (
         <div>
