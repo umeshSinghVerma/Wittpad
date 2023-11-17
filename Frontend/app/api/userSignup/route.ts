@@ -50,6 +50,7 @@ const readAllUsers = async()=>{
 
 // Read Users by ID
 const getUserById = async (value:string, key = 'id') => {
+    console.log("this is db above",db);
     const params = {
         TableName: Table,
         Key: {
