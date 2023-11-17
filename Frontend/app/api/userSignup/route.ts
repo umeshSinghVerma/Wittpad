@@ -11,7 +11,9 @@ export async function POST(request: Request) {
     const body = await readRequestBody(request.body);
     const email = body.id;
     const password = body.password;
+    console.log("this is body ",body);
     let { success, data } = await getUserById(email)
+    console.log('function ',success,data);
     if (success) {
         if(data?.id){
             success = true;
