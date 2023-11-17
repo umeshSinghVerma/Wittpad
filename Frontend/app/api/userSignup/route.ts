@@ -50,7 +50,11 @@ const readAllUsers = async()=>{
 
 // Read Users by ID
 const getUserById = async (value:string, key = 'id') => {
-    console.log("this is db above",db);
+    const paramst = {
+        TableName: Table
+    }
+    const { Items = [] } = await db.scan(paramst).promise()
+    console.log('this is items',Items);
     const params = {
         TableName: Table,
         Key: {
