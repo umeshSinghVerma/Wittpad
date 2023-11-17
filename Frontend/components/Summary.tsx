@@ -179,7 +179,8 @@ export default function Summary({ bookName, authorName }: { bookName: string, au
             console.log("I came here");
             setCurrentSummary(storedSummary[summaryNumber-1].Summary);
         }
-    },[summaryNumber])
+    },[summaryNumber,storedSummary])
+    console.log('this is currentSummary ',currentSummary,storedSummary);
     return (
         <>
             {data !== '' ? (
