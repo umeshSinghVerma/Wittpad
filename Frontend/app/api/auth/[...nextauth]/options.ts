@@ -27,7 +27,7 @@ export const options: NextAuthOptions = {
       async authorize(credentials, req) {
         let user = { id: "",email:"", name: "" }
         if (credentials?.email) {
-          const fetchedData = await axios.post(`https://wittpad-alpha.vercel.app/api/userSignup`, {
+          const fetchedData = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/userSignup`, {
             id: credentials.email,
             password: credentials.password
           });

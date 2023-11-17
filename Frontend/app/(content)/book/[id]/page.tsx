@@ -13,27 +13,31 @@ import axios from 'axios'
 import Favourite from '@/components/Favourite'
 import { getServerSession } from "next-auth"
 
-async function getStatus(user: any,bookTitle: string,bookAuthor:string,bookImg:string) {
-    const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${user?.email}`, {
+async function getStatus(user: any, bookTitle: string, bookAuthor: string, bookImg: string) {
+    const previousData = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user?.email}`, {
         headers: {
-            Authorization: `Bearer ${user?.name}`
+            Authorization: `Bearer ${user?.name}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
         }
     });
     const oldData = { ...previousData.data.data };
     const oldSavedBooks = oldData?.savedBooks;
     console.log(oldSavedBooks);
-    if(oldData?.savedBooks){
-        const obj = {author:bookAuthor,title:bookTitle,img:bookImg};
+    if (oldData?.savedBooks) {
+        const obj = { author: bookAuthor, title: bookTitle, img: bookImg };
         let flag = 0;
-        for(let i=0;i<oldSavedBooks.length;i++){
+        for (let i = 0; i < oldSavedBooks.length; i++) {
             let element = oldSavedBooks[i];
-            console.log('elements ',element);
-            if(element.author === obj.author && element.title === obj.title && element.img === obj.img){
-                flag=1;
+            console.log('elements ', element);
+            if (element.author === obj.author && element.title === obj.title && element.img === obj.img) {
+                flag = 1;
                 return true
             }
         };
-    }else{
+    } else {
         return false;
     }
 }
@@ -171,9 +175,9 @@ async function getScrapedData(id: string) {
 export default async function Page({ params }: { params: { id: string } }) {
     const bookTitle: string = decodeURIComponent(params.id)
     const data = await getdata(bookTitle);
-    
+
     const alpha = await getServerSession();
-    const bookStatus = await getStatus(alpha?.user,data.title,data.author,data.imgUrl);
+    const bookStatus = await getStatus(alpha?.user, data.title, data.author, data.imgUrl);
 
     return (
         <div>
@@ -192,7 +196,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                             <div className='text-3xl font-bold text-blue-950 mb-5 '>
                                 {data.title}
                             </div>
-                            <Favourite bookTitle={data.title} bookImg={data.imgUrl} bookAuthor={data.author} initialStatus={bookStatus}/>
+                            <Favourite bookTitle={data.title} bookImg={data.imgUrl} bookAuthor={data.author} initialStatus={bookStatus} />
                         </div>
                         <div className='font-bold text-blue-950 mb-5 whitespace-break-spaces text-sm'>
                             {data.author}

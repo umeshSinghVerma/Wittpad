@@ -6,7 +6,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { useSession } from 'next-auth/react'
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
-export default function Favourite({ bookTitle,bookImg,bookAuthor,initialStatus }: { bookTitle: string,bookImg:string,bookAuthor:string,initialStatus:boolean|undefined }) {
+export default function Favourite({ bookTitle, bookImg, bookAuthor, initialStatus }: { bookTitle: string, bookImg: string, bookAuthor: string, initialStatus: boolean | undefined }) {
     const { data: session } = useSession()
     const pathname = usePathname();
     const [favourite, setFavoutite] = useState<boolean | undefined>(initialStatus);
@@ -15,23 +15,31 @@ export default function Favourite({ bookTitle,bookImg,bookAuthor,initialStatus }
             {session && <div>
                 <IconButton onClick={() => {
                     if (favourite) {
-                        axios.delete(`https://wittpad-alpha.vercel.app/api/user?email=${session.user?.email}`, {
+                        axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${session.user?.email}`, {
                             data: {
                                 id: session.user?.email,
-                                removeBook: {author:bookAuthor,title:bookTitle,img:bookImg,link:pathname}
+                                removeBook: { author: bookAuthor, title: bookTitle, img: bookImg, link: pathname }
                             },
                             headers: {
-                                Authorization: `Bearer ${session.user?.name}`
+                                Authorization: `Bearer ${session.user?.name}`,
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+                                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                             }
                         })
                         setFavoutite(false);
                     } else {
-                        axios.post(`https://wittpad-alpha.vercel.app/api/user?email=${session.user?.email}`, {
+                        axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${session.user?.email}`, {
                             id: session.user?.email,
-                            savedBooks: {author:bookAuthor,title:bookTitle,img:bookImg,link:pathname}
+                            savedBooks: { author: bookAuthor, title: bookTitle, img: bookImg, link: pathname }
                         }, {
                             headers: {
-                                Authorization: `Bearer ${session.user?.name}`
+                                Authorization: `Bearer ${session.user?.name}`,
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+                                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                             }
                         })
                         setFavoutite(true);

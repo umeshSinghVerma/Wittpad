@@ -44,9 +44,13 @@ export async function POST(request: Request) {
         const token = authHeader ? authHeader.split(' ')[1] : null;
         const jwtdata = jwt.verify(token, process.env.SECRET_KEY);
 
-        const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${body.id}`, {
+        const previousData = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${body.id}`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
             }
         });
         const oldData = { ...previousData.data.data };
@@ -95,15 +99,19 @@ export async function DELETE(request: Request) {
         const token = authHeader ? authHeader.split(' ')[1] : null;
         const jwtdata = jwt.verify(token, process.env.SECRET_KEY);
 
-        const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${body.id}`, {
+        const previousData = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${body.id}`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
             }
         });
         const oldData = { ...previousData.data.data };
         const oldSavedBooks = oldData.savedBooks;
-        
-        const newSavedBooks = oldSavedBooks.filter((book:any)=>book.title!=body.removeBook.title)
+
+        const newSavedBooks = oldSavedBooks.filter((book: any) => book.title != body.removeBook.title)
         const newData = {
             id: oldData.id,
             password: oldData.password,

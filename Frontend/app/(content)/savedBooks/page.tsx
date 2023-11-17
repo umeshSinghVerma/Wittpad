@@ -5,9 +5,13 @@ import axios from 'axios';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 async function getSavedBook(user: any) {
-    const previousData = await axios.get(`https://wittpad-alpha.vercel.app/api/user?email=${user?.email}`, {
+    const previousData = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user?.email}`, {
         headers: {
-            Authorization: `Bearer ${user?.name}`
+            Authorization: `Bearer ${user?.name}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:3000,https://wittpad-alpha.vercel.app',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
         }
     });
     const oldData = { ...previousData.data.data };
@@ -16,6 +20,9 @@ async function getSavedBook(user: any) {
 }
 export default async function page() {
     const session = await getServerSession();
+    if (!session) {
+        redirect('/login');
+    }
 
     const savedBooks = await getSavedBook(session?.user);
     return (
