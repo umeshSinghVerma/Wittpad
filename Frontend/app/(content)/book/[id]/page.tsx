@@ -177,7 +177,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     const data = await getdata(bookTitle);
 
     const alpha = await getServerSession();
-    const bookStatus = await getStatus(alpha?.user, data.title, data.author, data.imgUrl);
+    let bookStatus=undefined;
+    if(alpha){
+        bookStatus = await getStatus(alpha?.user, data.title, data.author, data.imgUrl);
+    }
 
     return (
         <div>

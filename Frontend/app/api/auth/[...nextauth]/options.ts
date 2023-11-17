@@ -25,24 +25,38 @@ export const options: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        let user = { id: "",email:"", name: "" }
-        if (credentials?.email) {
-          const fetchedData = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/userSignup`, {
-            id: credentials.email,
-            password: credentials.password
-          });
-          if(fetchedData.data.success){
-            user = {
-              id: credentials.email,
-              email:credentials.email,
-              name: fetchedData.data.token
+        try {
+          let user = { id: "", email: "", name: "" };
+          console.log("credentials ", credentials?.email, credentials?.password);
+          if (credentials?.email) {
+            try {
+              const fetchedData = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/userSignup`, {
+                id: credentials.email,
+                password: credentials.password
+              });
+              console.log("fetchedData ", fetchedData.data);
+              if (fetchedData.data.success) {
+                user = {
+                  id: credentials.email,
+                  email: credentials.email,
+                  name: fetchedData.data.token
+                };
+              }
+            } catch (error) {
+              console.error("Error during user signup:", error);
+              // Handle the error as needed
             }
           }
-        }
-        if (user.id!="") {
-          return user
-        } else {
-          return null
+
+          if (user.id !== "") {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Error during authorization:", error);
+          // Handle the error as needed
+          return null;
         }
       }
     })
